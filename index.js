@@ -1,9 +1,19 @@
 const Express = require('express')
 const mongodb = require('mongodb').MongoClient
-
 const dotenv = require('dotenv')
-const app = Express()
 dotenv.config()
+const hbs = require("express-handlebars")
+const path = require('path')
+
+const app = Express()
+
+app.set("views", path.join(__dirname, "views"))
+app.set("view engine", "hbs")
+app.engine("hbs", hbs.engine({
+    extname: "hbs",
+    defaultLayout: "main",
+    layoutsDir: __dirname + "/views/layouts/"
+}))
 
 connectionToDB = async (connectionString) => {
   try {
