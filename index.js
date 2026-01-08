@@ -42,8 +42,13 @@ app.get("/", async (req, res) => {
 
 app.get("/article/:slug", async (req, res) => {
     const article = await (await db).collection("articles").findOne({slug: req.params.slug})
-    console.log(article)
     res.render("article", {article: article})
+})
+
+app.get("/author/:author_id", async(req, res) => {
+    const articles = await (await db).collection("articles").find({author_id: req.params.author_id}).toArray()
+    const author = await (await db).collection("authors").findOne({slug: req.params.author_id})
+    res.render("author", {articles: articles, authorName: author.name})
 })
 
 app.listen(3012, () => {
