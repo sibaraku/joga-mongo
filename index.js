@@ -40,6 +40,12 @@ app.get("/", async (req, res) => {
   res.render("index", { articles });
 });
 
+app.get("/article/:slug", async (req, res) => {
+    const article = await (await db).collection("articles").findOne({slug: req.params.slug})
+    console.log(article)
+    res.render("article", {article: article})
+})
+
 app.listen(3012, () => {
   console.log('Server is running on port 3012');
 });
